@@ -1,0 +1,133 @@
+import { useEffect, useState } from "react";
+import AddTodo from "../AddTodo/AddTodo.jsx";
+import Complete from "../Complete/Complete.jsx";
+import Incomplete from "../Incomplete/Incomplete.jsx";
+import { styles } from "./Home.module.jsx";
+import axios from "axios";
+import { URL } from "../../const.js";
+
+export default function Home() {
+  const [inputTodo, setInputTodo] = useState("");
+  const [incomplete, setIncomplete] = useState([]);
+  const [complete, setComplete] = useState([]);
+
+  const handleChange = (e) => {
+    setInputTodo(e.target.value);
+  };
+
+  const onClickAdd = () => {
+    if (inputTodo === "") return;
+    const onAdd = async () => {
+      try {
+        const res = await axios.post(URL.URL, {
+          title: inputTodo,
+        });
+        setIncomplete([...incomplete, res.data]);
+        setInputTodo("");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    onAdd();
+  };
+
+  const onClickComplete = (todo, index) => {
+    const onComplete = async () => {
+      try {
+        const res = await axios.put(
+          `${URL.URL}${todo.id}`,
+          todo
+        );
+        const newIncomplete = [...incomplete];
+        newIncomplete.splice(index, 1);
+        setIncomplete(newIncomplete);
+        const newComplete = [...complete, todo];
+        setComplete(newComplete);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    onComplete();
+  };
+
+  const onClickDelete = (id, index) => {
+    const onDelete = async () => {
+      try {
+        const res = await axios.delete(`${URL.URL}${id}`);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    onDelete();
+    const newTodos = [...incomplete];
+    newTodos.splice(index, 1);
+    setIncomplete(newTodos);
+  };
+
+  const onClickBack = (todo, index) => {
+    const onBack = async () => {
+      try {
+        const res = await axios.put(
+          `${URL.URL}${todo.id}`,
+          todo
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    onBack();
+    const newIncomplete = [...incomplete, todo];
+    setIncomplete(newIncomplete);
+
+    const newComplete = [...complete];
+    newComplete.splice(index, 1);
+    setComplete(newComplete);
+  };
+
+  const fetchTodos = () => {
+    const todoList = async () => {
+      try {
+        const res = await axios.get(URL.URL);
+        return res;
+      } catch (err) {
+        console.log("err", err);
+      }
+    };
+
+    todoList().then((res) => {
+      const newIncomplete = [...incomplete];
+      const newComplete = [...complete];
+      res.data.map((todo) => {
+        if (todo.isCompleted) {
+          newComplete.push(todo);
+        } else {
+          newIncomplete.push(todo);
+        }
+      });
+      setIncomplete(newIncomplete);
+      setComplete(newComplete);
+    });
+  };
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  return (
+    <>
+      <AddTodo
+        inputTodo={inputTodo}
+        handleChange={handleChange}
+        onClickAdd={onClickAdd}
+      />
+      <section className={styles.section}>
+        <Incomplete
+          incomplete={incomplete}
+          onClickComplete={onClickComplete}
+          onClickDelete={onClickDelete}
+        />
+        <Complete complete={complete} onClick={onClickBack} />
+      </section>
+    </>
+  );
+}
