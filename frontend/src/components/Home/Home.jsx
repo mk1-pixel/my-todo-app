@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import AddTodo from "../AddTodo/AddTodo.jsx";
-import Complete from "../Complete/Complete.jsx";
-import Incomplete from "../Incomplete/Incomplete.jsx";
-import { styles } from "./Home.module.jsx";
 import axios from "axios";
+import AddTodo from "../AddTodo/AddTodo.jsx";
+import TodoList from "../TodoList/TodoList.jsx";
+import { styles } from "./Home.module.jsx";
 import { URL } from "../../const.js";
 
 export default function Home() {
@@ -104,11 +103,7 @@ export default function Home() {
       const newIncomplete = [...incomplete];
       const newComplete = [...complete];
       res.data.map((todo) => {
-        if (todo.isCompleted) {
-          newComplete.push(todo);
-        } else {
-          newIncomplete.push(todo);
-        }
+        newIncomplete.push(todo);
       });
       setIncomplete(newIncomplete);
       setComplete(newComplete);
@@ -126,14 +121,15 @@ export default function Home() {
         onClickAdd={onClickAdd}
       />
       <section className={styles.section}>
-        <Incomplete
+        <TodoList
           incomplete={incomplete}
+          complete={complete}
           onClickComplete={onClickComplete}
           onClickDelete={onClickDelete}
-          changeDisplay={changeDisplay}
+          onClickBack={onClickBack}
           handleState={handleState}
+          changeDisplay={changeDisplay}
         />
-        <Complete complete={complete} onClick={onClickBack} />
       </section>
     </>
   );
