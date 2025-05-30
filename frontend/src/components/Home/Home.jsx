@@ -12,8 +12,8 @@ export default function Home() {
   const [changeDisplay, setChangeDisplay] = useState(true);
 
   const handleState = () => {
-    changeDisplay ? setChangeDisplay(false): setChangeDisplay(true)
-  }
+    changeDisplay ? setChangeDisplay(false) : setChangeDisplay(true);
+  };
 
   const handleChange = (e) => {
     setInputTodo(e.target.value);
@@ -38,10 +38,7 @@ export default function Home() {
   const onClickComplete = (todo, index) => {
     const onComplete = async () => {
       try {
-        const res = await axios.put(
-          `${URL.URL}${todo.id}`,
-          todo
-        );
+        const res = await axios.put(`${URL.URL}${todo.id}`, todo);
         const newIncomplete = [...incomplete];
         newIncomplete.splice(index, 1);
         setIncomplete(newIncomplete);
@@ -71,10 +68,7 @@ export default function Home() {
   const onClickBack = (todo, index) => {
     const onBack = async () => {
       try {
-        const res = await axios.put(
-          `${URL.URL}${todo.id}`,
-          todo
-        );
+        const res = await axios.put(`${URL.URL}${todo.id}`, todo);
       } catch (err) {
         console.log(err);
       }
@@ -115,22 +109,26 @@ export default function Home() {
 
   return (
     <>
-      <AddTodo
-        inputTodo={inputTodo}
-        handleChange={handleChange}
-        onClickAdd={onClickAdd}
-      />
-      <section className={styles.section}>
-        <TodoList
-          incomplete={incomplete}
-          complete={complete}
-          onClickComplete={onClickComplete}
-          onClickDelete={onClickDelete}
-          onClickBack={onClickBack}
-          handleState={handleState}
-          changeDisplay={changeDisplay}
-        />
-      </section>
+      <div className={styles.homeOuter}>
+        <div className={styles.homeWidthMd}>
+          <AddTodo
+            inputTodo={inputTodo}
+            handleChange={handleChange}
+            onClickAdd={onClickAdd}
+          />
+          <section className={styles.section}>
+            <TodoList
+              incomplete={incomplete}
+              complete={complete}
+              onClickComplete={onClickComplete}
+              onClickDelete={onClickDelete}
+              onClickBack={onClickBack}
+              handleState={handleState}
+              changeDisplay={changeDisplay}
+            />
+          </section>
+        </div>
+      </div>
     </>
   );
 }

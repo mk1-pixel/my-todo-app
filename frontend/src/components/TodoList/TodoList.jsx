@@ -1,4 +1,4 @@
-import StateButton from "../StateButton/StateButton";
+import TodoListHeader from "../TodoListHeader/TodoListHeader";
 import { styles } from "./TodoList.module";
 
 export default function Incomplete({
@@ -13,10 +13,7 @@ export default function Incomplete({
   return (
     <>
       <div className={styles.incompleteArea}>
-        <div className="flex justify-start content-center gap-2 border-b border-slate-300 mb-4 pb-1">
-          <h1 className={styles.h1}>{changeDisplay ? "未完了" : "完了"}</h1>
-          <StateButton handleState={handleState} />
-        </div>
+        <TodoListHeader handleState={handleState} changeDisplay={changeDisplay} />
         <div className={styles.listArea}>
           <ul className={styles.listUl}>
             {changeDisplay
