@@ -1,15 +1,20 @@
+import StateButton from "../StateButton/StateButton";
 import { styles } from "./Incomplete.module";
 
 export default function Incomplete({
   incomplete,
   onClickComplete,
   onClickDelete,
+  changeDisplay,
+  handleState
 }) {
-  console.log(incomplete)
   return (
     <>
       <div className={styles.incompleteArea}>
-        <h1 className={styles.h1}>未完了</h1>
+        <div className="flex justify-start content-center gap-2 border-b border-slate-300 mb-4 pb-1">
+          <h1 className={styles.h1}>{(changeDisplay) ? "未完了" : "完了"}</h1>
+          <StateButton handleState={handleState}/>
+        </div>
         <div className={styles.listArea}>
           <ul className={styles.listUl}>
             {incomplete.map((task, index) => (

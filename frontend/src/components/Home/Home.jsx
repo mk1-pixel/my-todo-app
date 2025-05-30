@@ -10,6 +10,11 @@ export default function Home() {
   const [inputTodo, setInputTodo] = useState("");
   const [incomplete, setIncomplete] = useState([]);
   const [complete, setComplete] = useState([]);
+  const [changeDisplay, setChangeDisplay] = useState(true);
+
+  const handleState = () => {
+    changeDisplay ? setChangeDisplay(false): setChangeDisplay(true)
+  }
 
   const handleChange = (e) => {
     setInputTodo(e.target.value);
@@ -125,6 +130,8 @@ export default function Home() {
           incomplete={incomplete}
           onClickComplete={onClickComplete}
           onClickDelete={onClickDelete}
+          changeDisplay={changeDisplay}
+          handleState={handleState}
         />
         <Complete complete={complete} onClick={onClickBack} />
       </section>
