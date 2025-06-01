@@ -7,7 +7,7 @@ export default function AddTodo({ inputTodo, handleChange, onClickAdd }) {
         <h1 className={styles.h1}>TODOアプリ</h1>
         <div>
           <div className={styles.addTodoArea}>
-            <div className="w-3/5">
+            <div className="w-3/5 md:w-4/5">
               <label htmlFor="first-name" className={styles.addTodoLabel}>
                 TODOを追加
               </label>
