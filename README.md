@@ -3,11 +3,17 @@
 ### アプリ概要
 
 <aside>
-<img src="https://www.notion.so/icons/info-alternate_gray.svg" alt="https://www.notion.so/icons/info-alternate_gray.svg" width="40px" /> ポートフォリオのため簡単なTODOアプリを作成する。フロント側はReact、バックエンドはC#で実装する。DBはPostgreSQLを使用する。
+<img src="https://www.notion.so/icons/info-alternate_gray.svg" alt="https://www.notion.so/icons/info-alternate_gray.svg" width="40px" /> ポートフォリオのため簡単なTODOアプリを作成します。フロント側はReact、バックエンドはC#で実装予定。DBはPostgreSQLを使用。
 
 </aside>
 
-## 機能一覧
+### 経過概要
+5月17日～25日：Reactの学習期間、UdemyやYouTube、公式チュートリアルなどを実施しました。始めはよくわかりませんでしたが学習を続ける事で概要はつかめたと思います。
+5月25日～現在：実際にフロントエンドからアプリ作成を開始しました。まずReactだけで動くものを作り、その後.netでApiを作成してフロント側と繋げました。DB利用でデータの永続化して、形になった所でDocker環境に移行しています。
+今後：今後はクラウドにデプロイした後、ログインやページ処理、詳細ページなどの機能追加を行う予定です。
+
+
+### 機能一覧
 
 - タスク一覧表示
 - タスクの追加
@@ -20,14 +26,14 @@
 [https://www.figma.com/design/zRkEX2gLczejwM6HuGLeCC/TODO%E3%82%A2%E3%83%97%E3%83%AA?node-id=0-1&t=sZFi5v20zDKiCCaI-1](https://www.figma.com/design/zRkEX2gLczejwM6HuGLeCC/TODO%E3%82%A2%E3%83%97%E3%83%AA?node-id=0-1&t=sZFi5v20zDKiCCaI-1)
 
 
-## 要求事項
+### 要求事項
 
 - タスクの追加
 - タスクの編集・削除
 - タスク一覧の完了／未完了の表示
 - レスポンシブ対応
 
-## 要件
+### 要件
 
 | 項目 | 内容 |
 | --- | --- |

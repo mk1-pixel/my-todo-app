@@ -18,11 +18,11 @@ services:
   backend:
     build:
       context: ./
-      dockerfile: backend/Dockerfile
+      dockerfile: backend/Dockerfile.dev
     ports:
       - "5000:5000"
     volumes:
-      - ./backend:/src
+      - ./backend:/app
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=TodoDb;Username=postgres;Password=secret

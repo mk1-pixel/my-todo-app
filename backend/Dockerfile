@@ -1,26 +1,45 @@
-# backend/Dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-# SDK（開発用）をベースにする
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# 開発・ビルドステージ
+FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build
 
-WORKDIR /src
+WORKDIR /app
+
+RUN dotnet new tool-manifest \
+ && dotnet tool install dotnet-ef
+
+# 環境変数でパスを永続的に追加
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
+# プロジェクトファイルを先にコピー＆復元
 COPY ./backend/*.sln ./
 COPY ./backend/*.csproj ./
-RUN dotnet restore ./backend.sln
-COPY . .
-# dotnet ef を使えるようにツールをインストール
-RUN dotnet tool install --global dotnet-ef
 
-# パスを通す（重要）
-ENV PATH="$PATH:/root/.dotnet/tools"
-WORKDIR /src/backend
+RUN dotnet clean
+RUN rm -rf bin obj
+
+RUN dotnet restore
+
+# dotnet ef を使えるようにツールをインストール
+RUN dotnet tool install dotnet-ef
+
 RUN dotnet ef migrations add InitialCreate --output-dir Data/Migrations || echo "Migration already exists"
 
-RUN dotnet build -c Release -o /app/build
-RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
+# 残りのソースコードをコピー＆ビルド＆パブリッシュ
+COPY . ./
+RUN dotnet build -c Release --no-restore
+RUN dotnet publish -c Release -o /app/out --no-restore
+# ---------------------------------------
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+# 実行用ステージ（軽量）
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-jammy AS runtime
+
+# 作業ディレクトリ
 WORKDIR /app
-COPY --from=build /app/publish .
+
+# ビルド成果物をコピー
+COPY --from=build /app/out ./
+
+# アプリが使うポート（必要に応じて調整）
 EXPOSE 5000
+
+# 起動コマンド
 ENTRYPOINT ["dotnet", "backend.dll"]

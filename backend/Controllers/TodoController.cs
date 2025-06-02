@@ -62,7 +62,7 @@ namespace backend.Controllers
 
             } catch (Exception ex)
             {
-                return NotFound(new {message = "Error"});
+                return NotFound(new {message = "Error", ex = ex});
             }
             return Ok(new {message = "成功", todo});
         }
