@@ -27,6 +27,7 @@ RUN dotnet ef migrations add InitialCreate --output-dir Data/Migrations || echo 
 COPY . ./
 RUN dotnet clean \
  && rm -rf bin obj \
+ && dotnet restore \  
  && dotnet build -c Release --no-restore
 RUN dotnet publish -c Release -o /app/out --no-restore
 # ---------------------------------------
