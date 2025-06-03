@@ -1,3 +1,3 @@
 export const URL = {
-  URL:"http://localhost:5000/api/todo/",
+  URL:"https://my-todo-app-qqn0.onrender.com/api/todo/",
 }
