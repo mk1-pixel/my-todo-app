@@ -42,4 +42,4 @@ COPY --from=build /app/out ./
 EXPOSE 5000
 
 # 起動コマンド
-ENTRYPOINT ["dotnet", "backend.dll"]
+ENTRYPOINT ["dotnet", "backend-app.dll"]
