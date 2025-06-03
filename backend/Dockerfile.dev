@@ -1,20 +1,16 @@
+# backend/Dockerfile.dev
 FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy
 
 WORKDIR /app
 
-# dotnet ef をグローバルツールとしてインストール（確実にパスが通る）
 RUN dotnet tool install -g dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 
-# csproj を先にコピーして restore
 COPY ./backend/*.csproj ./
 RUN dotnet restore
 
-# 残りのコードをコピー
 COPY ./backend ./
 
-# ポートを開放
 EXPOSE 5000
 
-# マイグレーションがなければ作成、DB更新後に watch 起動
-CMD ["sh", "-c", "dotnet ef migrations add DevMigration --output-dir Data/Migrations --no-build || echo 'Migration already exists' && dotnet ef database update && dotnet watch run --urls=http://0.0.0.0:5000"]
+CMD ["dotnet", "watch", "run", "--urls=http://0.0.0.0:5000"]
