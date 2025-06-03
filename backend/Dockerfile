@@ -25,7 +25,9 @@ RUN dotnet ef migrations add InitialCreate --output-dir Data/Migrations || echo 
 
 # 残りのソースコードをコピー＆ビルド＆パブリッシュ
 COPY . ./
-RUN dotnet build -c Release --no-restore
+RUN dotnet clean \
+ && rm -rf bin obj \
+ && dotnet build -c Release --no-restore
 RUN dotnet publish -c Release -o /app/out --no-restore
 # ---------------------------------------
 
@@ -42,4 +44,4 @@ COPY --from=build /app/out ./
 EXPOSE 5000
 
 # 起動コマンド
-ENTRYPOINT ["dotnet", "backend-app.dll"]
+ENTRYPOINT ["dotnet", "backend.dll"]
