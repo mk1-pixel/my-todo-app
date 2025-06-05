@@ -10,6 +10,9 @@ export default function Home() {
   const [incomplete, setIncomplete] = useState([]);
   const [complete, setComplete] = useState([]);
   const [changeDisplay, setChangeDisplay] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
   const handleState = () => {
     changeDisplay ? setChangeDisplay(false) : setChangeDisplay(true);
@@ -22,14 +25,25 @@ export default function Home() {
   const onClickAdd = () => {
     if (inputTodo === "") return;
     const onAdd = async () => {
+      setLoading(true);
+      const startTime = Date.now();
       try {
-        const res = await axios.post(URL.URL, {
+        const res = await axios.post(apiUrl, {
           title: inputTodo,
         });
         setIncomplete([...incomplete, res.data]);
         setInputTodo("");
       } catch (err) {
         console.log(err);
+      } finally {
+        const elapsed = Date.now() - startTime;
+        const remaining = 1000 - elapsed;
+        setTimeout(
+          () => {
+            setLoading(false);
+          },
+          remaining > 0 ? remaining : 0
+        );
       }
     };
     onAdd();
@@ -38,7 +52,7 @@ export default function Home() {
   const onClickComplete = (todo, index) => {
     const onComplete = async () => {
       try {
-        const res = await axios.put(`${URL.URL}${todo.id}`, todo);
+        const res = await axios.put(`${apiUrl}${todo.id}`, todo);
         const newIncomplete = [...incomplete];
         newIncomplete.splice(index, 1);
         setIncomplete(newIncomplete);
@@ -54,7 +68,7 @@ export default function Home() {
   const onClickDelete = (id, index) => {
     const onDelete = async () => {
       try {
-        const res = await axios.delete(`${URL.URL}${id}`);
+        const res = await axios.delete(`${apiUrl}${id}`);
       } catch (err) {
         console.log(err);
       }
@@ -68,7 +82,7 @@ export default function Home() {
   const onClickBack = (todo, index) => {
     const onBack = async () => {
       try {
-        const res = await axios.put(`${URL.URL}${todo.id}`, todo);
+        const res = await axios.put(`${apiUrl}${todo.id}`, todo);
       } catch (err) {
         console.log(err);
       }
@@ -84,12 +98,24 @@ export default function Home() {
   };
 
   const fetchTodos = () => {
+    setLoading(true);
+    const startTime = Date.now();
+
     const todoList = async () => {
       try {
-        const res = await axios.get(URL.URL);
+        const res = await axios.get(apiUrl);
         return res;
       } catch (err) {
         console.log("err", err);
+      } finally {
+        const elapsed = Date.now() - startTime;
+        const remaining = 1000 - elapsed;
+        setTimeout(
+          () => {
+            setLoading(false);
+          },
+          remaining > 0 ? remaining : 0
+        );
       }
     };
 
@@ -125,6 +151,7 @@ export default function Home() {
               onClickBack={onClickBack}
               handleState={handleState}
               changeDisplay={changeDisplay}
+              loading={loading}
             />
           </section>
         </div>

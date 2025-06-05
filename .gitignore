@@ -13,6 +13,9 @@ dist-ssr
 dist/
 .env
 .env.local
+./backend/.env.production
+./frontend/.env.production
+appsettings.Production.json
 .vite
 .DS_Store
 *.log

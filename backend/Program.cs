@@ -3,14 +3,26 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var isDevelopment = builder.Environment.IsDevelopment();
+
 // 🔧 フロントエンドの URL を指定
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("https://my-todo-frontend.onrender.com")
+        if (isDevelopment)
+        {
+            policy.WithOrigins("http://localhost:3000")
               .AllowAnyHeader()
               .AllowAnyMethod();
+
+        } 
+        else
+        {
+            policy.WithOrigins("https://my-todo-frontend.onrender.com")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+        }
     });
 });
 
