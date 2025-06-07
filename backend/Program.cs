@@ -3,33 +3,27 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var isDevelopment = builder.Environment.IsDevelopment();
+// ✅ 開発／本番で URL を切り替える
+var frontendOrigin = builder.Environment.IsDevelopment()
+    ? "http://localhost:3000"
+    : "https://my-todo-frontend.onrender.com";
 
-// 🔧 フロントエンドの URL を指定
+// ✅ CORS ポリシーを一貫して登録
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        if (isDevelopment)
-        {
-            policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins(frontendOrigin)
               .AllowAnyHeader()
               .AllowAnyMethod();
-
-        } 
-        else
-        {
-            policy.WithOrigins("https://my-todo-frontend.onrender.com")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-        }
     });
 });
 
-// 🔧 UseUrls は builder.Build() の前に！
+// ✅ ポート設定（builder.Build の前）
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
+// ✅ DB 接続
 builder.Services.AddDbContext<TodoContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -39,22 +33,26 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// ✅ 自動マイグレーション
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TodoContext>();
-    db.Database.Migrate(); // 自動マイグレーション
+    db.Database.Migrate();
 }
 
-// ✅ CORS は HTTPS や Auth より前に
-app.UseCors("AllowFrontend");
-
+// ✅ Swagger（開発のみ）
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// ✅ CORS（Swaggerより後、Controllersより前）
+app.UseCors("AllowFrontend");
+
+// 🔽 HTTPS Redirection は無効化しても可（Render 側でやるので）
+// app.UseHttpsRedirection();
+
 app.UseAuthorization();
 app.MapControllers();
 
