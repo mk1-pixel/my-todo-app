@@ -53,6 +53,7 @@ export default function Home() {
     const onComplete = async () => {
       try {
         const res = await axios.put(`${apiUrl}${todo.id}`, todo);
+        console.log(res)
         const newIncomplete = [...incomplete];
         newIncomplete.splice(index, 1);
         setIncomplete(newIncomplete);
@@ -104,6 +105,7 @@ export default function Home() {
     const todoList = async () => {
       try {
         const res = await axios.get(apiUrl);
+        console.log(res)
         return res;
       } catch (err) {
         console.log("err", err);
@@ -123,7 +125,11 @@ export default function Home() {
       const newIncomplete = [...incomplete];
       const newComplete = [...complete];
       res.data.map((todo) => {
-        newIncomplete.push(todo);
+        if(!todo.isCompleted){
+          newIncomplete.push(todo);
+        } else {
+          newComplete.push(todo);
+        }
       });
       setIncomplete(newIncomplete);
       setComplete(newComplete);
