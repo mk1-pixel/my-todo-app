@@ -3,23 +3,34 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ 開発／本番で URL を切り替える
-var frontendOrigin = builder.Environment.IsDevelopment()
-    ? "http://localhost:3000"
-    : "https://my-todo-frontend.onrender.com";
-
-// ✅ CORS ポリシーを一貫して登録
+// ✅ CORS ポリシーを登録
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
+    if (builder.Environment.IsDevelopment())
     {
-        policy.WithOrigins(frontendOrigin)
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+        // ✅ 開発環境：すべて許可（ローカルなど）
+        options.AddPolicy("AllowFrontend", policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+    }
+    else
+    {
+        // ✅ 本番環境：指定オリジンのみ許可
+        var frontendOrigin = "https://my-todo-frontend.onrender.com";
+
+        options.AddPolicy("AllowFrontend", policy =>
+        {
+            policy.SetIsOriginAllowed(origin => origin == frontendOrigin)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+    }
 });
 
-// ✅ ポート設定（builder.Build の前）
+// ✅ ポート設定
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
@@ -47,11 +58,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// ✅ CORS（Swaggerより後、Controllersより前）
+// ✅ CORS（コントローラより前）
 app.UseCors("AllowFrontend");
-
-// 🔽 HTTPS Redirection は無効化しても可（Render 側でやるので）
-// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.MapControllers();
