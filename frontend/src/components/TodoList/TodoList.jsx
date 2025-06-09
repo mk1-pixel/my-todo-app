@@ -1,5 +1,7 @@
+import DueDate from "../DueDate/DueDate";
 import TodoListHeader from "../TodoListHeader/TodoListHeader";
 import { styles } from "./TodoList.module";
+import { BrowserRouter, Route, Routes, Link, Links } from "react-router-dom";
 
 export default function Incomplete({
   incomplete,
@@ -28,23 +30,26 @@ export default function Incomplete({
               </div>
             ) : changeDisplay ? (
               incomplete.map((task, index) => (
-                <li key={index} className={styles.listLi}>
-                  <span className={styles.listSpan}>{task.title}</span>
-                  <div className={styles.buttonArea}>
-                    <button
-                      className={styles.buttonComplete}
-                      onClick={() => onClickComplete(task, index)}
-                    >
-                      完了
-                    </button>
-                    <button
-                      className={styles.buttonDelete}
-                      onClick={() => onClickDelete(task.id, index)}
-                    >
-                      削除
-                    </button>
-                  </div>
-                </li>
+                <Link to="detail" key={index} state={{title: task.title}}>
+                  <li key={index} className={styles.listLi}>
+                    <span className={styles.listSpan}>{task.title}</span>
+                    <div className={styles.buttonArea}>
+                      <button
+                        className={styles.buttonComplete}
+                        onClick={() => onClickComplete(task, index)}
+                      >
+                        完了
+                      </button>
+                      <button
+                        className={styles.buttonDelete}
+                        onClick={() => onClickDelete(task.id, index)}
+                      >
+                        削除
+                      </button>
+                      <DueDate />
+                    </div>
+                  </li>
+                </Link>
               ))
             ) : (
               complete.map((task, index) => (
@@ -58,6 +63,7 @@ export default function Incomplete({
                       戻す
                     </button>
                   </div>
+                  <DueDate />
                 </li>
               ))
             )}
