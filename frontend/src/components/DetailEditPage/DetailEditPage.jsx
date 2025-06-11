@@ -2,10 +2,10 @@ import { Link, useLocation } from "react-router-dom";
 import { styles } from "./DetailEditPage.module.jsx";
 import { useTodoActions } from "../../hooks/useTodoActions.jsx";
 
-export default function DetailPage() {
+export default function DetailEditPage() {
   const location = useLocation();
   const state = location.state;
-  const { onClickDelete } = useTodoActions();
+  const {} = useTodoActions();
 
   return (
     <>
@@ -31,7 +31,19 @@ export default function DetailPage() {
                     d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
                   />
                 </svg>
-                <h1 className={styles.h1}>{state.title}</h1>
+                <div className="w-3/5 md:w-4/5">
+                  <label htmlFor="first-name" className={styles.addTodoLabel}>
+                    <h1 className={styles.h1}>Title</h1>
+                  </label>
+                  <input
+                    id="first-name"
+                    type="text"
+                    className={styles.addTodoInput}
+                    value={inputTodo}
+                    onChange={handleChange}
+                    placeholder="読書をする。"
+                  />
+                </div>
               </Link>
 
               <div className={styles.listArea}>
@@ -39,11 +51,11 @@ export default function DetailPage() {
                   <div className="flex justify-between">
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>期限日：</span>
-                      <div className={styles.detailDate}>2025/08/22</div>
+                      <div className={styles.detailDate}></div>
                     </div>
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>作成日：</span>
-                      <div className={styles.detailDate}>2025/07/22</div>
+                      <div className={styles.detailDate}></div>
                     </div>
                   </div>
                   <div className="flex justify-between">
@@ -53,7 +65,7 @@ export default function DetailPage() {
                     </div>
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>
-                      <div className={styles.detailDate}>高</div>
+                      <div className={styles.detailDate}></div>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 border-gray-50 py-2 px-2 border-b border-slate-200">
@@ -64,12 +76,6 @@ export default function DetailPage() {
                   </div>
                   <div className={styles.buttonArea}>
                     <button className={styles.buttonComplete}>編集</button>
-                    <button
-                      className={styles.buttonDelete}
-                      onClick={() => onClickDelete(state.id, state.index)}
-                    >
-                      削除
-                    </button>
                   </div>
                 </div>
               </div>

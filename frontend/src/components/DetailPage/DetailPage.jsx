@@ -34,7 +34,7 @@ export default function DetailPage() {
                     d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
                   />
                 </svg>
-                <h1 className={styles.h1}>{}</h1>
+                <h1 className={styles.h1}>{detailData.title}</h1>
               </Link>
 
               <div className={styles.listArea}>
@@ -66,7 +66,7 @@ export default function DetailPage() {
                     </div>
                   </div>
                   <div className={styles.buttonArea}>
-                    <Link to="detailEdit">
+                    <Link to="edit">
                       <button className={styles.buttonComplete}>編集</button>
                     </Link>
                     <button
