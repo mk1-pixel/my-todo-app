@@ -1,7 +1,7 @@
 import DueDate from "../DueDate/DueDate";
 import TodoListHeader from "../TodoListHeader/TodoListHeader";
 import { styles } from "./TodoList.module";
-import { BrowserRouter, Route, Routes, Link, Links } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
 export default function Incomplete({
   incomplete,
@@ -30,7 +30,7 @@ export default function Incomplete({
               </div>
             ) : changeDisplay ? (
               incomplete.map((task, index) => (
-                <Link to="detail" key={index} state={{title: task.title}}>
+                <Link to={`detail/${task.id}`} key={index} state={{id: task.id,index: index, title: task.title}}>
                   <li key={index} className={styles.listLi}>
                     <span className={styles.listSpan}>{task.title}</span>
                     <div className={styles.buttonArea}>
