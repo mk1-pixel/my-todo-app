@@ -9,9 +9,9 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 COPY ./backend/*.csproj ./
 RUN dotnet restore
 
-RUN dotnet ef database update --project ./backend.csproj
-
 COPY ./backend ./
+
+RUN dotnet ef database update --project ./backend.csproj
 
 EXPOSE 5000
 # 通常起動コマンド（RenderのDocker Commandで上書きされる想定）
