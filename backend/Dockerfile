@@ -11,7 +11,9 @@ RUN dotnet restore
 
 COPY ./backend ./
 
+RUN dotnet publish -c Release -o out
 
+WORKDIR /app/out
 
 EXPOSE 5000
 # 通常起動コマンド（RenderのDocker Commandで上書きされる想定）
