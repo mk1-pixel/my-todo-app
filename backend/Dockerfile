@@ -6,8 +6,7 @@ WORKDIR /app
 RUN dotnet tool install -g dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 
-RUN dotnet ef migrations add InitialCreate
-RUN dotnet ef database update
+RUN dotnet ef database update --project ./backend.csproj
 
 COPY ./backend/*.csproj ./
 RUN dotnet restore
