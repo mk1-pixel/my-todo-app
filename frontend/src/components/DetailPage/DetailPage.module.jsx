@@ -12,8 +12,9 @@ export const styles = {
   detailTitle: "font-bold text-base",
   detailDate: "flex self-center",
   
-  buttonArea: "flex justify-end gap-2",
-  buttonComplete: "bg-blue-500 hover:bg-blue-600 cursor-pointer text-base text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300",
+  buttonArea: "flex flex-row justify-between gap-2",
+  buttonEdit: "bg-blue-500 hover:bg-blue-600 cursor-pointer text-base text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300",
+  buttonComplete: "bg-emerald-500 hover:bg-emerald-600 cursor-pointer text-base text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300",
   buttonDelete: "bg-red-500 hover:bg-red-600 cursor-pointer text-base text-white font-semibold py-2 px-4 rounded shadow-md hover:shadow-lg transition duration-300",
   
 };

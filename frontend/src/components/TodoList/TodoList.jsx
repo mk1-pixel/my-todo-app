@@ -1,4 +1,3 @@
-import DueDate from "../DueDate/DueDate";
 import TodoListHeader from "../TodoListHeader/TodoListHeader";
 import { styles } from "./TodoList.module";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
@@ -34,19 +33,6 @@ export default function Incomplete({
                   <li key={index} className={styles.listLi}>
                     <span className={styles.listSpan}>{task.title}</span>
                     <div className={styles.buttonArea}>
-                      <button
-                        className={styles.buttonComplete}
-                        onClick={() => onClickComplete(task, index)}
-                      >
-                        完了
-                      </button>
-                      <button
-                        className={styles.buttonDelete}
-                        onClick={() => onClickDelete(task.id, index)}
-                      >
-                        削除
-                      </button>
-                      <DueDate />
                     </div>
                   </li>
                 </Link>
@@ -63,7 +49,6 @@ export default function Incomplete({
                       戻す
                     </button>
                   </div>
-                  <DueDate />
                 </li>
               ))
             )}

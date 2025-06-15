@@ -57,16 +57,28 @@ export function useTodoActions() {
     onAdd();
   };
 
-  const onClickComplete = (todo, index) => {
+  const onClickComplete = () => {
+    const res = incomplete.filter((todo) => {
+      return todo.id == id;
+    });
+    const task = res[0];
     const onComplete = async () => {
       try {
-        const res = await axios.put(`${apiUrl}${todo.id}`, todo);
-        console.log(res);
+        const res = await axios.put(`${apiUrl}${id}`, {
+          Id: task.id,
+          Title: task.title,
+          IsCompleted: task.isCompleted,
+          createdDate: task.createdDate,
+          DueDate: task.dueDate,
+          Description: task.description,
+          Priority: task.priority,
+        });
         const newIncomplete = [...incomplete];
-        newIncomplete.splice(index, 1);
+        newIncomplete.splice(id, 1);
         setIncomplete(newIncomplete);
-        const newComplete = [...complete, todo];
+        const newComplete = [...complete, task];
         setComplete(newComplete);
+        navigate("/");
       } catch (err) {
         console.log(err);
       }
@@ -74,6 +86,38 @@ export function useTodoActions() {
     onComplete();
   };
 
+  
+  const onClickRestore = (e, id) => {
+    const res = incomplete.filter((todo) => {
+      return todo.id == id;
+    });
+    const task = res[0];
+    console.log(detailData)
+    const onComplete = async () => {
+      try {
+        const res = await axios.put(`${apiUrl}${id}`, {
+          Id: detailData.id,
+          Title: detailData.title,
+          IsCompleted: detailData.isCompleted,
+          createdDate: detailData.createdDate,
+          DueDate: new Date(detailData.dueDate).toISOString(),
+          Description: detailData.description,
+          Priority: detailData.priority,
+        });
+        console.log(res)
+        const newIncomplete = [...incomplete];
+        newIncomplete.splice(id, 1);
+        setIncomplete(newIncomplete);
+        const newComplete = [...complete, task];
+        setComplete(newComplete);
+        navigate(-1);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    onComplete();
+  };
+  
   const onClickDelete = (id, index) => {
     const result = window.confirm("削除しますか");
     if (!result) return;
@@ -169,7 +213,7 @@ export function useTodoActions() {
           detailData.isCompleted = result.isCompleted;
           detailData.priority = result.priority;
         } catch (err) {
-          console.log(err)
+          console.log(err);
         }
       };
       res();
@@ -189,10 +233,12 @@ export function useTodoActions() {
     detailData,
     handleState,
     handleChange,
+    setDetailData,
     onClickAdd,
     onClickComplete,
     onClickDelete,
     onClickBack,
+    onClickRestore,
     getDetail,
     fetchDetail,
   };

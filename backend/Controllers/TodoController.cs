@@ -47,13 +47,7 @@ namespace backend.Controllers
         public async Task<IActionResult> UpdateTodo(int id, TodoItem todo)
         {
             if(id != todo.Id) return BadRequest();
-            if(todo.IsCompleted == true)
-            {
-                todo.IsCompleted = false;
-            } else
-            {
-                todo.IsCompleted = true;
-            }
+            
             _context.Entry(todo).State = EntityState.Modified;
             
             try
