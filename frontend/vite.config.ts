@@ -11,5 +11,11 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 3000,
+  },
+  optimizeDeps: {
+    include: ['react-paginate'],
+  },
+  resolve: {
+    dedupe: ['react', 'react-dom']
   }
 })

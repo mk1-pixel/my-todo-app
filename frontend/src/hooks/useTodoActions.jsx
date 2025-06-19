@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { utils } from "../utils/utils";
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 export function useTodoActions() {
@@ -19,7 +19,6 @@ export function useTodoActions() {
     description: "",
     priority: 0,
   });
-
   const navigate = useNavigate();
 
   const handleState = () => {
@@ -35,10 +34,19 @@ export function useTodoActions() {
     const onAdd = async () => {
       setLoading(true);
       const startTime = Date.now();
+      const dueDate = new Date();
+      dueDate.setDate(dueDate.getDate() + 7)
       try {
-        const res = await axios.post(apiUrl, {
+        const data = {
           title: inputTodo,
-        });
+          isCompleted: false,
+          createdDate: new Date().toISOString(),
+          dueDate: dueDate.toISOString(),
+          description: "",
+          priority: 1,
+        }
+        console.log(data)
+        const res = await axios.post(apiUrl, data);
         setIncomplete([...incomplete, res.data]);
         setInputTodo("");
       } catch (err) {
@@ -57,7 +65,7 @@ export function useTodoActions() {
     onAdd();
   };
 
-  const onClickComplete = () => {
+  const onClickComplete = (e, id) => {
     const res = incomplete.filter((todo) => {
       return todo.id == id;
     });
@@ -67,7 +75,7 @@ export function useTodoActions() {
         const res = await axios.put(`${apiUrl}${id}`, {
           Id: task.id,
           Title: task.title,
-          IsCompleted: task.isCompleted,
+          IsCompleted: true,
           createdDate: task.createdDate,
           DueDate: task.dueDate,
           Description: task.description,
@@ -86,13 +94,11 @@ export function useTodoActions() {
     onComplete();
   };
 
-  
   const onClickRestore = (e, id) => {
     const res = incomplete.filter((todo) => {
       return todo.id == id;
     });
     const task = res[0];
-    console.log(detailData)
     const onComplete = async () => {
       try {
         const res = await axios.put(`${apiUrl}${id}`, {
@@ -104,7 +110,6 @@ export function useTodoActions() {
           Description: detailData.description,
           Priority: detailData.priority,
         });
-        console.log(res)
         const newIncomplete = [...incomplete];
         newIncomplete.splice(id, 1);
         setIncomplete(newIncomplete);
@@ -117,7 +122,7 @@ export function useTodoActions() {
     };
     onComplete();
   };
-  
+
   const onClickDelete = (id, index) => {
     const result = window.confirm("削除しますか");
     if (!result) return;

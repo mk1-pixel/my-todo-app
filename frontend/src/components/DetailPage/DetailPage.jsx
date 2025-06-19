@@ -8,9 +8,7 @@ export default function DetailPage() {
   const state = location.state;
   const {
     onClickDelete,
-    getDetail,
     fetchDetail,
-    incomplete,
     detailData,
     onClickComplete,
   } = useTodoActions();
@@ -69,13 +67,13 @@ export default function DetailPage() {
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>
                       <div className={styles.detailDate}>
-                        {detailData.priority}
+                        {detailData.priority === 0 ? "高" : detailData.priority === 1 ? "中": "低"}
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 border-gray-50 py-2 px-2 border-b border-slate-200">
                     <span className={styles.detailTitle}>メモ</span>
-                    <div className="relative w-full min-w-[200px] break-words whitespace-normal border border-gray-300 shadow rounded p-2 ">
+                    <div className="relative w-full min-w-[200px] min-h-[150px] text-base break-words whitespace-normal border border-gray-300 shadow rounded p-2 ">
                         {detailData.description}
                     </div>
                   </div>
@@ -94,7 +92,7 @@ export default function DetailPage() {
                     <div className="">
                       <button
                         className={styles.buttonComplete}
-                        onClick={() => onClickComplete(id)}
+                        onClick={(e) => onClickComplete(e, id)}
                       >
                         完了
                       </button>

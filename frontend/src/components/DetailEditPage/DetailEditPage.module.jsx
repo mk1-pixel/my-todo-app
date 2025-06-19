@@ -10,7 +10,7 @@ export const styles = {
 
   item: "flex justify-start border-gray-50 py-2 px-2 border-b border-slate-200",
   detailTitle: "content-center font-bold text-base",
-  detailDate: "flex self-center",
+  detailDate: "flex text-base self-center",
   
   buttonArea: "flex justify-end gap-2",
   buttonComplete: "bg-blue-500 hover:bg-blue-600 cursor-pointer text-base text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300",

@@ -33,10 +33,16 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoItem>> CreateTodo([FromBody]TodoItem todo)
         {
+            DateTime aWeekLater= DateTime.Now.AddDays(7);
+            
             var newTodo = new TodoItem
             {
                 Title = todo.Title,
-                IsCompleted = false
+                IsCompleted = false,
+                CreatedDate = todo.CreatedDate,
+                DueDate = todo.DueDate,
+                Description = "",
+                Priority = 1
             };
             _context.Todos.Add(newTodo);
             await _context.SaveChangesAsync();

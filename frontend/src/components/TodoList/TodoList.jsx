@@ -1,17 +1,65 @@
-import TodoListHeader from "../TodoListHeader/TodoListHeader";
+import { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
+import { TodoListHeader } from "../TodoListHeader/TodoListHeader";
+import { TodoListItems } from "../TodoListItems/TodoListItems";
 import { styles } from "./TodoList.module";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import css from "./TodoList.module.css";
 
 export default function Incomplete({
   incomplete,
   complete,
-  onClickComplete,
-  onClickDelete,
-  onClickBack,
   changeDisplay,
   handleState,
-  loading,
 }) {
+  function PaginatedItems({ itemsPerPage }) {
+    const [currentItems, setCurrentItems] = useState(null);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
+
+    useEffect(() => {
+      const endOffset = itemOffset + itemsPerPage;
+      const derivedArray = changeDisplay ? [...incomplete] : [...complete];
+      const newCurrentItems = derivedArray.slice(itemOffset, endOffset);
+      setCurrentItems(newCurrentItems);
+      setPageCount(Math.ceil(derivedArray.length / itemsPerPage));
+    }, [itemOffset, itemsPerPage, changeDisplay, incomplete, complete]);
+
+    const handlePageClick = (event) => {
+      const derivedArray = changeDisplay ? [...incomplete] : [...complete];
+      const newOffset = (event.selected * itemsPerPage) % derivedArray.length;
+      setItemOffset(newOffset);
+    };
+
+    return (
+      <>
+        <TodoListItems
+          currentItems={currentItems}
+          changeDisplay={changeDisplay}
+        />
+        <ReactPaginate
+          nextLabel=">"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          pageCount={pageCount}
+          previousLabel="<"
+          pageClassName={css.li}
+          pageLinkClassName="page-link"
+          previousClassName="previous"
+          previousLinkClassName="page-link"
+          nextClassName="next"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName={css.pagination}
+          activeClassName={css.active}
+          renderOnZeroPageCount={null}
+        />
+      </>
+    );
+  }
+
   return (
     <>
       <div className={styles.incompleteArea}>
@@ -19,41 +67,7 @@ export default function Incomplete({
           handleState={handleState}
           changeDisplay={changeDisplay}
         />
-        <div className={styles.listArea}>
-          <ul className={styles.listUl}>
-            {loading ? (
-              <div className="animate-pulse bg-gray-50 w-full h-screen absolute -top-px -left-px right-full bottom-full flex justify-center items-center">
-                <div className="animate-pulse" aria-label="読み込み中">
-                  <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent"></div>
-                </div>
-              </div>
-            ) : changeDisplay ? (
-              incomplete.map((task, index) => (
-                <Link to={`detail/${task.id}`} key={index} state={{id: task.id,index: index, title: task.title}}>
-                  <li key={index} className={styles.listLi}>
-                    <span className={styles.listSpan}>{task.title}</span>
-                    <div className={styles.buttonArea}>
-                    </div>
-                  </li>
-                </Link>
-              ))
-            ) : (
-              complete.map((task, index) => (
-                <li key={index} className={styles.completeLi}>
-                  <span className={styles.completeSpan}>{task.title}</span>
-                  <div className={styles.completeButtonArea}>
-                    <button
-                      className={styles.completeButtonBack}
-                      onClick={() => onClickBack(task, index)}
-                    >
-                      戻す
-                    </button>
-                  </div>
-                </li>
-              ))
-            )}
-          </ul>
-        </div>
+        <PaginatedItems itemsPerPage={5} />
       </div>
     </>
   );

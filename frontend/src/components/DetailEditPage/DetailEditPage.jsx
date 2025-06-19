@@ -1,55 +1,32 @@
-import { Link,  useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { styles } from "./DetailEditPage.module.jsx";
 import { useTodoActions } from "../../hooks/useTodoActions.jsx";
 import DatePicker from "react-datepicker";
+import ja from "date-fns/locale/ja";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { utils } from "../../utils/utils.jsx";
 
 export default function DetailEditPage() {
-  const [dueDate, setdueDate] = useState(new Date());
-  const navi = useNavigate()
+  const navi = useNavigate();
   const { id } = useParams();
-  const {
-    inputTodo,
-    incomplete,
-    complete,
-    changeDisplay,
-    loading,
-    detailData,
-    handleState,
-    handleChange,
-    onClickAdd,
-    onClickComplete,
-    onClickDelete,
-    onClickBack,
-    onClickRestore,
-    fetchDetail,
-    setDetailData
-  } = useTodoActions();
+  const { detailData, onClickRestore, fetchDetail, setDetailData } =
+    useTodoActions();
   const { changeDate } = utils();
   fetchDetail(id);
 
-  const formChange = (e)=>{
-    const {name, value} = e.target; 
-    setDetailData(prev => ({
+  const formChange = (e) => {
+    const { name, value } = e.target;
+    setDetailData((prev) => ({
       ...prev,
-      [name]: value
-    }))
-    console.log(detailData)
-
-  }
+      [name]: value,
+    }));
+  };
   const formDateChange = (date) => {
     const newDate = changeDate(date.toString());
+    setDetailData((prev) => ({ ...prev, dueDate: newDate }));
+  };
 
-    setDetailData(prev => ({...prev, dueDate: newDate}))
-    console.log(detailData)
-
-  }
-  
-  const onclickChange= (e, id) => {
-    console.log(id)
-  }
   return (
     <>
       <div className={styles.homeOuter}>
@@ -98,9 +75,12 @@ export default function DetailEditPage() {
                       <DatePicker
                         name="dueDate"
                         showIcon
+                        locale={ja}
                         selected={detailData.dueDate}
                         onChange={(date) => formDateChange(date)}
-                        className="border border-gray-300 rounded-md shadow px-3 py-2 w-full"
+                        dateFormat="yyyy/MM/dd"
+                        dateFormatCalendar="yyyy年 MM月"
+                        className="pt-[0.8rem] text-base align-middle border border-gray-300 rounded-md shadow px-3 py-2 w-full"
                       />
                     </div>
                     <div className={styles.item}>
@@ -118,7 +98,12 @@ export default function DetailEditPage() {
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>
                       <div className={styles.detailDate}></div>
-                      <select name="priority" onChange={(e) => formChange(e)} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 cursor-pointer text-sm font-bold rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                      <select
+                        name="priority"
+                        value={detailData.priority}
+                        onChange={(e) => formChange(e)}
+                        className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 cursor-pointer text-sm font-bold rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                      >
                         <option value="0">高</option>
                         <option value="1">中</option>
                         <option value="2">低</option>
@@ -128,14 +113,27 @@ export default function DetailEditPage() {
                   <div className="flex flex-col gap-2 border-gray-50 py-2 px-2 border-b border-slate-200">
                     <span className={styles.detailTitle}>メモ</span>
                     <div className="relative w-full min-w-[200px]">
-                      <textarea name="description" defaultValue={detailData.description} onChange={(e)=> formChange(e)} className="h-full min-h-[100px] w-full resize-none rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 transition-all duration-300 focus:outline-none focus:ring-1"></textarea>
+                      <textarea
+                        name="description"
+                        defaultValue={detailData.description}
+                        onChange={(e) => formChange(e)}
+                        className="h-full min-h-[100px] w-full resize-none rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 transition-all duration-300 focus:outline-none focus:ring-1"
+                      ></textarea>
                     </div>
                   </div>
                   <div className={styles.buttonArea}>
-                    <button onClick={() => navi(-1)} className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded cursor-pointer transition duration-300">
+                    <button
+                      onClick={() => navi(-1)}
+                      className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded cursor-pointer transition duration-300"
+                    >
                       キャンセル
                     </button>
-                    <button onClick={(e) => onClickRestore(e, id)} className={styles.buttonComplete}>保存</button>
+                    <button
+                      onClick={(e) => onClickRestore(e, id)}
+                      className={styles.buttonComplete}
+                    >
+                      保存
+                    </button>
                   </div>
                 </div>
               </div>

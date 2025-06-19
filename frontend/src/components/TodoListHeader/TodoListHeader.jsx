@@ -1,6 +1,6 @@
 import { styles } from "./TodoListHeader.module";
 
-export default function TodoListHeader({handleState, changeDisplay}) {
+export function TodoListHeader({handleState, changeDisplay}) {
   return (
     <>
       <div className="flex justify-start content-center gap-2 border-b border-slate-300 mb-4 pb-1">
