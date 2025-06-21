@@ -1,6 +1,22 @@
+import { useState } from "react";
 import { styles } from "./AddTodo.module";
 
-export default function AddTodo({ inputTodo, handleChange, onClickAdd }) {
+export default function AddTodo({ inputTodo, setInputTodo, onClickAdd }) {
+  const [caution, setCaution] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const handleChange = (e) => {
+    if (e.target.value.length >= 20) {
+      setCaution(true);
+      setDisabled(true)
+      return;
+    } else {
+      setCaution(false);
+      setDisabled(false)
+
+    }
+    setInputTodo(e.target.value);
+  };
+
   return (
     <>
       <div className={styles.todoAppArea}>
@@ -22,11 +38,17 @@ export default function AddTodo({ inputTodo, handleChange, onClickAdd }) {
             </div>
             <button
               onClick={() => onClickAdd(inputTodo)}
-              className={styles.addTodoButton}
+              className={styles.addTodoButton +`${disabled ? " cursor-not-allowed" : null}`}
+              disabled={disabled}
             >
               追加
             </button>
           </div>
+          {caution ? (
+            <p className="text-red-500 text-sm mt-1">
+              20文字以内で入力してください。
+            </p>
+          ) : null}
         </div>
       </div>
     </>

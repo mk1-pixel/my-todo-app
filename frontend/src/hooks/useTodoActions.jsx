@@ -25,27 +25,23 @@ export function useTodoActions() {
     changeDisplay ? setChangeDisplay(false) : setChangeDisplay(true);
   };
 
-  const handleChange = (e) => {
-    setInputTodo(e.target.value);
-  };
-
   const onClickAdd = () => {
     if (inputTodo === "") return;
     const onAdd = async () => {
       setLoading(true);
       const startTime = Date.now();
       const dueDate = new Date();
-      dueDate.setDate(dueDate.getDate() + 7)
+      dueDate.setDate(dueDate.getDate() + 7);
       try {
         const data = {
           title: inputTodo,
           isCompleted: false,
           createdDate: new Date().toISOString(),
-          dueDate: dueDate.toISOString(),
+          dueDate: null,
           description: "",
           priority: 1,
-        }
-        console.log(data)
+        };
+        console.log(data);
         const res = await axios.post(apiUrl, data);
         setIncomplete([...incomplete, res.data]);
         setInputTodo("");
@@ -81,11 +77,6 @@ export function useTodoActions() {
           Description: task.description,
           Priority: task.priority,
         });
-        const newIncomplete = [...incomplete];
-        newIncomplete.splice(id, 1);
-        setIncomplete(newIncomplete);
-        const newComplete = [...complete, task];
-        setComplete(newComplete);
         navigate("/");
       } catch (err) {
         console.log(err);
@@ -110,12 +101,7 @@ export function useTodoActions() {
           Description: detailData.description,
           Priority: detailData.priority,
         });
-        const newIncomplete = [...incomplete];
-        newIncomplete.splice(id, 1);
-        setIncomplete(newIncomplete);
-        const newComplete = [...complete, task];
-        setComplete(newComplete);
-        navigate(-1);
+        navigate("/");
       } catch (err) {
         console.log(err);
       }
@@ -130,34 +116,25 @@ export function useTodoActions() {
     const onDelete = async () => {
       try {
         const res = await axios.delete(`${apiUrl}${id}`);
-        console.log(res);
+        navigate("/");
       } catch (err) {
         console.log(err);
       }
     };
     onDelete();
-    const newTodos = [...incomplete];
-    newTodos.splice(index, 1);
-    setIncomplete(newTodos);
-    navigate("/");
   };
 
   const onClickBack = (todo, index) => {
+    todo.isCompleted = false;
     const onBack = async () => {
       try {
         const res = await axios.put(`${apiUrl}${todo.id}`, todo);
+        await fetchTodos();
       } catch (err) {
         console.log(err);
       }
     };
-
     onBack();
-    const newIncomplete = [...incomplete, todo];
-    setIncomplete(newIncomplete);
-
-    const newComplete = [...complete];
-    newComplete.splice(index, 1);
-    setComplete(newComplete);
   };
 
   const getDetail = async (id) => {
@@ -190,19 +167,8 @@ export function useTodoActions() {
         );
       }
     };
-
     todoList().then((res) => {
-      const newIncomplete = [...incomplete];
-      const newComplete = [...complete];
-      res.data.map((todo) => {
-        if (!todo.isCompleted) {
-          newIncomplete.push(todo);
-        } else {
-          newComplete.push(todo);
-        }
-      });
-      setIncomplete(newIncomplete);
-      setComplete(newComplete);
+      splitTodos(res.data)
     });
   };
   const fetchDetail = (id) => {
@@ -225,6 +191,20 @@ export function useTodoActions() {
     }, [id]);
   };
 
+  const splitTodos = (todos) => {
+    const newIncomplete = [];
+    const newComplete = [];
+    todos.map((todo) => {
+      if (!todo.isCompleted) {
+        newIncomplete.push(todo);
+      } else {
+        newComplete.push(todo);
+      }
+    });
+    setIncomplete(newIncomplete);
+    setComplete(newComplete);
+  };
+
   useEffect(() => {
     fetchTodos();
   }, []);
@@ -237,7 +217,7 @@ export function useTodoActions() {
     loading,
     detailData,
     handleState,
-    handleChange,
+    setInputTodo,
     setDetailData,
     onClickAdd,
     onClickComplete,
@@ -246,5 +226,6 @@ export function useTodoActions() {
     onClickRestore,
     getDetail,
     fetchDetail,
+    splitTodos
   };
 }

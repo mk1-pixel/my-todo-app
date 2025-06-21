@@ -14,7 +14,6 @@ export default function DetailEditPage() {
     useTodoActions();
   const { changeDate } = utils();
   fetchDetail(id);
-
   const formChange = (e) => {
     const { name, value } = e.target;
     setDetailData((prev) => ({
@@ -23,8 +22,7 @@ export default function DetailEditPage() {
     }));
   };
   const formDateChange = (date) => {
-    const newDate = changeDate(date.toString());
-    setDetailData((prev) => ({ ...prev, dueDate: newDate }));
+    setDetailData((prev) => ({ ...prev, dueDate: date }));
   };
 
   return (
@@ -64,7 +62,7 @@ export default function DetailEditPage() {
                         name="title"
                         className={styles.addTodoInput}
                         onChange={(e) => formChange(e)}
-                        placeholder={detailData.title}
+                        value={detailData.title}
                       />
                     </div>
                   </div>
@@ -76,7 +74,8 @@ export default function DetailEditPage() {
                         name="dueDate"
                         showIcon
                         locale={ja}
-                        selected={detailData.dueDate}
+                        selected={detailData.dueDate || null}
+                        placeholderText=""
                         onChange={(date) => formDateChange(date)}
                         dateFormat="yyyy/MM/dd"
                         dateFormatCalendar="yyyy年 MM月"

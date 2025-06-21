@@ -8,12 +8,21 @@
 
 ul.pagination li {
   cursor: pointer;
-  padding: 0.3rem 0.7rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-
+ul.pagination li a{
+  display: block;
+  padding: 0.3rem 0.7rem;
+}
+ul.pagination li a:hover {
+  background-color: rgba(229, 231, 235);
+}
 ul.pagination .active {
-  background-color: #0070f3;
-  color: white;
+  background-color: rgba(209, 213, 219);
+  color: black;
+}
+ul.pagination .disabled{
+  pointer-events: none;
+  color: lightgray;
 }

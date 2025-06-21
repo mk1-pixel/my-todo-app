@@ -1,15 +1,35 @@
 import { Link } from "react-router-dom";
-import { useTodoActions } from "../../hooks/useTodoActions";
 import Loading from "../Loading/Loading";
 import { styles } from "./TodoListItems.module";
+import { utils } from "../../utils/utils";
 
-export function TodoListItems({ currentItems,changeDisplay }) {
-  const {onClickBack, loading} = useTodoActions()
-  
+export function TodoListItems({
+  currentItems,
+  changeDisplay,
+  onClickBack,
+  loading,
+}) {
+  const { changeDate } = utils();
+
+  const calcDate = (task) => {
+    const duedate = new Date(task.dueDate);
+    const now = new Date();
+    const today = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
+  };
+
   return (
     <>
       <div className={styles.listArea}>
         <ul className={styles.listUl}>
+          {changeDisplay ? 
+          <li className={styles.listLi}>
+            <div className="basis-15/20 text-left font-bold">Todo</div>
+            <div className="basis-4/20 text-left font-bold">期限日</div>
+            <div className="basis-1/20 text-left font-bold">重要度</div>
+          </li>
+          : <li className={styles.listLi}>
+            <div className="basis-15/20 text-left font-bold">Todo</div>
+          </li>}
           {loading ? (
             <Loading />
           ) : changeDisplay ? (
@@ -22,6 +42,29 @@ export function TodoListItems({ currentItems,changeDisplay }) {
               >
                 <li key={index} className={styles.listLi}>
                   <span className={styles.listSpan}>{task.title}</span>
+
+                  <div className="basis-4/20 text-left text-base bold">
+                    {changeDate(task.dueDate)}
+                  </div>
+                  <div
+                    className={
+                      task.priority === 2
+                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-red-600"
+                        : task.priority === 1
+                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-yellow-500"
+                        : task.priority === 0
+                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-blue-400"
+                        : null
+                    }
+                  >
+                    {task.priority === 2
+                      ? "高"
+                      : task.priority === 1
+                      ? "中"
+                      : task.priority === 0
+                      ? "低"
+                      : null}
+                  </div>
                   <div className={styles.buttonArea}></div>
                 </li>
               </Link>

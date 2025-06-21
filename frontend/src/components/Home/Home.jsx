@@ -3,7 +3,6 @@ import axios from "axios";
 import AddTodo from "../AddTodo/AddTodo.jsx";
 import TodoList from "../TodoList/TodoList.jsx";
 import { styles } from "./Home.module.jsx";
-import { URL } from "../../const.js";
 import { useTodoActions } from "../../hooks/useTodoActions.jsx";
 
 export default function Home() {
@@ -14,7 +13,7 @@ export default function Home() {
     changeDisplay,
     loading,
     handleState,
-    handleChange,
+    setInputTodo,
     onClickAdd,
     onClickComplete,
     onClickDelete,
@@ -27,7 +26,7 @@ export default function Home() {
         <div className={styles.homeWidthMd}>
           <AddTodo
             inputTodo={inputTodo}
-            handleChange={handleChange}
+            setInputTodo={setInputTodo}
             onClickAdd={onClickAdd}
           />
           <section className={styles.section}>

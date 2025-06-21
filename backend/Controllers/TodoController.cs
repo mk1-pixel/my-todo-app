@@ -18,8 +18,21 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodos() => 
-            await _context.Todos.ToListAsync();
+        public async Task<ActionResult<TodoItem>> GetTodos() {
+            var todos = await _context.Todos.Select(t => new TodoItem {
+                Id = t.Id,
+                Title = t.Title,
+                IsCompleted = t.IsCompleted,
+                CreatedDate = t.CreatedDate,
+                DueDate = t.DueDate,
+                Description = t.Description,
+                Priority = t.Priority
+            }).ToListAsync();
+            return Ok(todos);
+        }
+            // await _context.Todos.ToListAsync();
+            
+
 
 
         [HttpGet("{id}")]
