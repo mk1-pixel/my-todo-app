@@ -30,8 +30,9 @@
 
 ### セットアップ（ローカル環境で動かす場合）
 1. リポジトリのクローン: `git clone https://github.com/mk1-pixel/my-todo-app.git`
-2. Doker環境の起動: `docker-compose up --build`
-3. 
+2. .env.localの作成: /frontend/.env.localを作成。
+    - 内容は `VITE_API_BASE_URL=http://localhost:5000/api/todo/`
+3. Doker環境の起動: `docker-compose -f compose.dev.yml up --build`
 
 ### 経過概要
 - 1週間目：Reactの学習期間、UdemyやYouTube、公式チュートリアルなどを実施しました。始めはよくわかりませんでしたが学習を続ける事で概要はつかめたと思います。
