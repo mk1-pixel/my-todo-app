@@ -49,20 +49,20 @@ export function TodoListItems({
                   <div
                     className={
                       task.priority === 2
-                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-red-600"
-                        : task.priority === 1
-                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-yellow-500"
-                        : task.priority === 0
                         ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-blue-400"
+                        : task.priority === 1
+                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-yellow-400"
+                        : task.priority === 0
+                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-red-400"
                         : null
                     }
                   >
                     {task.priority === 2
-                      ? "高"
+                      ? "低"
                       : task.priority === 1
                       ? "中"
                       : task.priority === 0
-                      ? "低"
+                      ? "高"
                       : null}
                   </div>
                   <div className={styles.buttonArea}></div>

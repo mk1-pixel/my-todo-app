@@ -67,7 +67,7 @@ export default function DetailPage() {
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>
                       <div className={styles.detailDate}>
-                        {detailData.priority === 0 ? "高" : detailData.priority === 1 ? "中": "低"}
+                        {detailData.priority === 0 ? "高" : detailData.priority === 1 ? "中" : "低"}
                       </div>
                     </div>
                   </div>

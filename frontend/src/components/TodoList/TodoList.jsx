@@ -53,7 +53,7 @@ function PaginatedItems({
     const sliced = derivedArray.slice(itemOffset, endOffset);
     setCurrentItems(sliced);
     setPageCount(Math.ceil(derivedArray.length / itemsPerPage));
-  }, [itemOffset, derivedArray, itemsPerPage]);
+  }, [itemOffset, derivedArray, itemsPerPage, changeDisplay]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % derivedArray.length;

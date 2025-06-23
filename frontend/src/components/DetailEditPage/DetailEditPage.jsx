@@ -1,13 +1,16 @@
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { styles } from "./DetailEditPage.module.jsx";
 import { useTodoActions } from "../../hooks/useTodoActions.jsx";
+import { FaCalendarAlt } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import ja from "date-fns/locale/ja";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { utils } from "../../utils/utils.jsx";
+import "./DetailEditPage.module.css";
 
 export default function DetailEditPage() {
+  const today = new Date();
   const navi = useNavigate();
   const { id } = useParams();
   const { detailData, onClickRestore, fetchDetail, setDetailData } =
@@ -70,17 +73,20 @@ export default function DetailEditPage() {
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>期限日：</span>
                       <div className={styles.detailDate}></div>
-                      <DatePicker
-                        name="dueDate"
-                        showIcon
-                        locale={ja}
-                        selected={detailData.dueDate || null}
-                        placeholderText=""
-                        onChange={(date) => formDateChange(date)}
-                        dateFormat="yyyy/MM/dd"
-                        dateFormatCalendar="yyyy年 MM月"
-                        className="pt-[0.8rem] text-base align-middle border border-gray-300 rounded-md shadow px-3 py-2 w-full"
-                      />
+                      <div className="flex items-center">
+                        <FaCalendarAlt className="relative -right-5" />
+                        <DatePicker
+                          name="dueDate"
+                          locale={ja}
+                          selected={detailData.dueDate || null}
+                          placeholderText=""
+                          onChange={(date) => formDateChange(date)}
+                          dateFormat="yyyy/MM/dd"
+                          dateFormatCalendar="yyyy年 MM月"
+                          minDate={today}
+                          className=" text-base align-middle border border-gray-300 rounded-md shadow pl-6 pr-3 py-2 w-full"
+                        />
+                      </div>
                     </div>
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>作成日：</span>

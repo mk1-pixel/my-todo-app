@@ -13,6 +13,6 @@ export const styles = {
   completeLi: "flex border-gray-50 py-2 px-2 gap-2 border-b border-slate-200",
   completeSpan: "content-center text-base flex-auto",
   completeButtonArea: "flex gap-2",
-  completeButtonBack: "bg-gray-400 hover:bg-gray-500  cursor-pointer text-white font-semibold py-2 px-4 rounded shadow-md hover:shadow-lg transition-shadow duration-200"
+  completeButtonBack: "bg-gray-400 hover:bg-gray-500 cursor-pointer text-white font-semibold py-1 px-4 rounded shadow-md hover:shadow-lg transition duration-200"
 
 }

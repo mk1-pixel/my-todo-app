@@ -90,6 +90,7 @@ export function useTodoActions() {
       return todo.id == id;
     });
     const task = res[0];
+    console.log(detailData)
     const onComplete = async () => {
       try {
         const res = await axios.put(`${apiUrl}${id}`, {
@@ -97,7 +98,7 @@ export function useTodoActions() {
           Title: detailData.title,
           IsCompleted: detailData.isCompleted,
           createdDate: detailData.createdDate,
-          DueDate: new Date(detailData.dueDate).toISOString(),
+          DueDate: detailData.dueDate,
           Description: detailData.description,
           Priority: detailData.priority,
         });
