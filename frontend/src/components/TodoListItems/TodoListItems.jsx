@@ -10,7 +10,6 @@ export function TodoListItems({
   loading,
 }) {
   const { changeDate } = utils();
-
   const calcDate = (task) => {
     const duedate = new Date(task.dueDate);
     const now = new Date();

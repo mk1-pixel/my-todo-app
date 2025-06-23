@@ -41,6 +41,7 @@ function PaginatedItems({
   onClickBack,
   loading,
 }) {
+  let prevFlag = true;
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -49,10 +50,14 @@ function PaginatedItems({
   }, [changeDisplay, incomplete, complete]);
 
   useEffect(() => {
+    if (changeDisplay != prevFlag) {
+      setItemOffset(0);
+    }
     const endOffset = itemOffset + itemsPerPage;
     const sliced = derivedArray.slice(itemOffset, endOffset);
     setCurrentItems(sliced);
     setPageCount(Math.ceil(derivedArray.length / itemsPerPage));
+    prevFlag = changeDisplay;
   }, [itemOffset, derivedArray, itemsPerPage, changeDisplay]);
 
   const handlePageClick = (event) => {
