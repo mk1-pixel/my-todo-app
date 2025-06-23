@@ -1,9 +1,11 @@
 # My Todo App
 
+「React + .NET + Docker を用いて、個人でフルスタック開発・デプロイ・運用まで一貫して行った実証アプリです。」
+
 ### アプリ概要
 
 <aside>
-<img src="https://www.notion.so/icons/info-alternate_gray.svg" alt="https://www.notion.so/icons/info-alternate_gray.svg" width="40px" /> このアプリはReactとC# ASP.netでフルスタックで構築しています。DBはPostgreSQLを使用してデータの永続化実施、Docker環境での開発の標準化、デプロイはRenderを利用しています。</aside>
+このアプリはReactとC# ASP.netでフルスタックで構築しています。DBはPostgreSQLを使用してデータの永続化実施、Docker環境での開発の標準化、デプロイはRenderを利用しています。</aside>
 
 <aside>
 タスクの作成・編集・削除、完了・未完了切り替え、ページング処理を実装済みです。ログイン認証は今後開発予定です。CRUDの基本的な動作ですがフルスタックで開発しています。
@@ -39,7 +41,12 @@
 - 2週間目：実際にフロントエンドからアプリ作成を開始しました。まずReactだけで動くものを作り、その後.netでApiを作成してフロント側と繋げました。DB利用でデータの永続化して、形になった所でDocker環境に移行しています。
 - 3週間：Renderにデプロイ後、詳細ページを作成中。
 - 4週間目：ページング処理、詳細ページ等を実装しました。
-- 今後の予定：ログイン認証などの実装、リファクタリング、CI/CD環境に移行、テスト実装などを予定しています。
+- 今後の予定
+    - ログイン認証などの実装
+    - コードリファクタリング
+    - CI/CD環境に移行
+    - テスト実装など
+    - TypeScript対応
 
 ### アーキテクチャ図
 ![アーキテクチャ図](./docs/architecture.svg)
