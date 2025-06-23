@@ -41,6 +41,21 @@
 - 4週間目：ページング処理、詳細ページ等を実装しました。
 - 今後の予定：ログイン認証などの実装、リファクタリング、CI/CD環境に移行、テスト実装などを予定しています。
 
+### アーキテクチャ図
+![アーキテクチャ図](./docs/architecture.svg)
+
+### ER図
+![ER Diagram](./docs/TodoDb.png)
+
+### API一覧
+|Method|URL|説明|
+|------|---|----|
+|GET|./api/todo|タスク一覧の取得|
+|GET|./api/todo/:id|タスクの取得|
+|POST|./api/todo|タスク追加|
+|PUT|./api/todo/:id|タスク編集|
+|DELETE|./api/todo/:id|タスク削除|
+
 ### 機能一覧
 
 - タスク一覧表示
@@ -53,11 +68,11 @@
 ### 課題と工夫点
 - フルスタックで開発出来る事の証明：今回はこの環境で開発出来る事を示すために作成。そのためアプリ自体は簡単なものにした。
 - 開発環境の標準化：Dockerでフロントエンド、バックエンド、DBをコンテナ化し、リモート開発での標準化を実施。また、環境構築の煩雑さをDocker Composeを導入し1コマンドで解決。
-- デプロイ：Renderでのデプロイを実施。今後は継続的デプロイ環境の構築をGitHub Actionsで予定。
+- デプロイ：Renderでのデプロイを実施。今後は継続的デプロイ環境の構築をGitHub Actionsで予定。併せてTypeScriptにも対応予定。
 
 
 ### ワイヤーフレーム
-（初期の物）
+（初期バージョン）
 [https://www.figma.com/design/zRkEX2gLczejwM6HuGLeCC/TODO%E3%82%A2%E3%83%97%E3%83%AA?node-id=0-1&t=sZFi5v20zDKiCCaI-1](https://www.figma.com/design/zRkEX2gLczejwM6HuGLeCC/TODO%E3%82%A2%E3%83%97%E3%83%AA?node-id=0-1&t=sZFi5v20zDKiCCaI-1)
 
 
