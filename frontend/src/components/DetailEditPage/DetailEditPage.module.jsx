@@ -1,10 +1,10 @@
 export const styles = {
   homeOuter: "flex justify-center min-h-screen",
   homeWidthMd:"w-full max-w-screen-md h-screen flex flex-col gap-5 p-5 ",
-  section: "flex flex-col flex-1 md:flex-row rounded-sm",
+  section: "flex flex-col md:flex-row rounded-sm",
   
   h1: "w-auto text-xl text-slate-700 font-bold",
-  incompleteArea:"flex flex-col flex-1 overflow-y-auto bg-gray-100 text-left p-4 rounded-sm shadow-md md:mb-0",
+  incompleteArea:"flex flex-col w-full overflow-y-auto bg-gray-100 text-left p-4 rounded-sm shadow-md md:mb-0",
   listArea: "bg-white  h-full rounded-sm  shadow-md",
   listUl:"flex flex-col gap-2 border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 list-disc",
 
