@@ -42,17 +42,17 @@ export function TodoListItems({
                 <li key={index} className={styles.listLi}>
                   <span className={styles.listSpan}>{task.title}</span>
 
-                  <div className="basis-4/20 text-left text-base bold">
+                  <div className="max-[450px]:basis-4/20 basis-4/20 text-left text-base bold">
                     {changeDate(task.dueDate)}
                   </div>
                   <div
                     className={
                       task.priority === 2
-                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-blue-400"
+                        ? "max-[450px]:basis-3/20 basis-1/20 shrink-0 text-center text-white border-grey content-center bold rounded bg-blue-400"
                         : task.priority === 1
-                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-yellow-400"
+                        ? "max-[450px]:basis-3/20 basis-1/20 shrink-0 text-center text-white border-grey content-center bold rounded bg-yellow-400"
                         : task.priority === 0
-                        ? "basis-1/20 text-center text-white border-grey content-center bold rounded bg-red-400"
+                        ? "max-[450px]:basis-3/20 basis-1/20 shrink-0 text-center text-white border-grey content-center bold rounded bg-red-400"
                         : null
                     }
                   >

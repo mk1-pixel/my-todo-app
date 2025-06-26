@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { TodoListHeader } from "../TodoListHeader/TodoListHeader";
 import { TodoListItems } from "../TodoListItems/TodoListItems";
@@ -41,23 +41,24 @@ function PaginatedItems({
   onClickBack,
   loading,
 }) {
-  let prevFlag = true;
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+  const prevFlag = useRef(changeDisplay);
   const derivedArray = useMemo(() => {
     return changeDisplay ? incomplete : complete;
   }, [changeDisplay, incomplete, complete]);
 
   useEffect(() => {
-    if (changeDisplay != prevFlag) {
+    if (changeDisplay !== prevFlag.current) {
       setItemOffset(0);
+      prevFlag.current = changeDisplay;
     }
+    console.log(itemOffset)
     const endOffset = itemOffset + itemsPerPage;
     const sliced = derivedArray.slice(itemOffset, endOffset);
     setCurrentItems(sliced);
     setPageCount(Math.ceil(derivedArray.length / itemsPerPage));
-    prevFlag = changeDisplay;
   }, [itemOffset, derivedArray, itemsPerPage, changeDisplay]);
 
   const handlePageClick = (event) => {

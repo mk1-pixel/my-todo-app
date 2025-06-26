@@ -45,7 +45,7 @@ export default function DetailPage() {
 
               <div className={styles.listArea}>
                 <div className={styles.listUl}>
-                  <div className="flex justify-between">
+                  <div className="sm:flex-row md:flex justify-between">
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>期限日：</span>
                       <div className={styles.detailDate}>
@@ -59,7 +59,7 @@ export default function DetailPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="sm:flex-row md:flex justify-between">
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>タグ：</span>
                       <div className={styles.detailDate}>仕事</div>
