@@ -62,7 +62,8 @@ export default function DetailPage() {
                   <div className="sm:flex-row md:flex justify-between">
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>タグ：</span>
-                      <div className={styles.detailDate}>仕事</div>
+                      <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">Badge</span>
+                      <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">Badge</span>
                     </div>
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>

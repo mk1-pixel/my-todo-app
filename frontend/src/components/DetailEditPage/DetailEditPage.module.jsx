@@ -5,11 +5,12 @@ export const styles = {
   
   h1: "w-auto text-xl text-slate-700 font-bold",
   incompleteArea:"flex flex-col w-full overflow-y-auto bg-gray-100 text-left p-4 rounded-sm shadow-md md:mb-0",
-  listArea: "bg-white  h-full rounded-sm  shadow-md",
+  listArea: "bg-white h-full rounded-sm  shadow-md",
   listUl:"flex flex-col gap-2 border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 list-disc",
 
-  item: "flex justify-start border-gray-50 py-2 px-2 border-b border-slate-200",
-  detailTitle: "content-center font-bold text-base",
+  item: "flex justify-start items-center border-gray-50 py-2 px-2 gap-2 border-b border-slate-200",
+  detailTitle: "font-bold text-base",
+  detailTitleCol: "font-bold text-base",
   detailDate: "flex text-base self-center",
   
   buttonArea: "flex justify-end gap-2",

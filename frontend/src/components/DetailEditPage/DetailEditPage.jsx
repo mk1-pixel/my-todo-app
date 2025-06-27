@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { utils } from "../../utils/utils.jsx";
 import "./DetailEditPage.module.css";
+import { Tag } from "../tag/Tag.jsx";
 
 export default function DetailEditPage() {
   const today = new Date();
@@ -72,8 +73,7 @@ export default function DetailEditPage() {
                   <div className="sm:flex-row md:flex justify-between">
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>期限日：</span>
-                      <div className={styles.detailDate}></div>
-                      <div className="flex items-center">
+                      <div className="flex items-center -ml-3">
                         <FaCalendarAlt className="relative -right-5" />
                         <DatePicker
                           name="dueDate"
@@ -96,27 +96,25 @@ export default function DetailEditPage() {
                     </div>
                   </div>
                   <div className="sm:flex-row md:flex justify-between">
-                    <div className={styles.item}>
-                      <span className={styles.detailTitle}>タグ：</span>
-                      <div className={styles.detailDate}>仕事</div>
-                    </div>
+                    <Tag />
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>
-                      <div className={styles.detailDate}></div>
-                      <select
-                        name="priority"
-                        value={detailData.priority}
-                        onChange={(e) => formChange(e)}
-                        className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 cursor-pointer text-sm font-bold rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                      >
-                        <option value="0">高</option>
-                        <option value="1">中</option>
-                        <option value="2">低</option>
-                      </select>
+                      <div className="flex items-center">
+                        <select
+                          name="priority"
+                          value={detailData.priority}
+                          onChange={(e) => formChange(e)}
+                          className="h-8 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 cursor-pointer text-sm font-bold rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                        >
+                          <option value="0">高</option>
+                          <option value="1">中</option>
+                          <option value="2">低</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 border-gray-50 py-2 px-2 border-b border-slate-200">
-                    <span className={styles.detailTitle}>メモ</span>
+                    <span className={styles.detailTitleCol}>メモ</span>
                     <div className="relative w-full min-w-[200px]">
                       <textarea
                         name="description"
