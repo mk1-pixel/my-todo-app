@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { utils } from "../../utils/utils.jsx";
 import "./DetailEditPage.module.css";
-import { Tag } from "../tag/Tag.jsx";
+import { Tag } from "../Tag/Tag.jsx";
 
 export default function DetailEditPage() {
   const today = new Date();
