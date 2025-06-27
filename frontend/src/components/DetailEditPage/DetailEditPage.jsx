@@ -1,14 +1,13 @@
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { styles } from "./DetailEditPage.module.jsx";
-import { useTodoActions } from "../../hooks/useTodoActions.jsx";
 import { FaCalendarAlt } from "react-icons/fa";
+import { Tag } from "../TagItem/TagItem.jsx";
 import DatePicker from "react-datepicker";
 import ja from "date-fns/locale/ja";
-import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import { useTodoActions } from "../../hooks/useTodoActions.jsx";
 import { utils } from "../../utils/utils.jsx";
+import "react-datepicker/dist/react-datepicker.css";
 import "./DetailEditPage.module.css";
-import { Tag } from "../Tag/Tag.jsx";
 
 export default function DetailEditPage() {
   const today = new Date();
@@ -96,7 +95,7 @@ export default function DetailEditPage() {
                     </div>
                   </div>
                   <div className="sm:flex-row md:flex justify-between">
-                    <Tag />
+                    <Tag  />
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>
                       <div className="flex items-center">

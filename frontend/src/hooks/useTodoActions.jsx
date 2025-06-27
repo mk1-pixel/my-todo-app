@@ -227,6 +227,6 @@ export function useTodoActions() {
     onClickRestore,
     getDetail,
     fetchDetail,
-    splitTodos
+    splitTodos,
   };
 }

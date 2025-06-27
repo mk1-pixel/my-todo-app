@@ -2,6 +2,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { styles } from "./DetailPage.module";
 import { useTodoActions } from "../../hooks/useTodoActions.jsx";
 import { utils } from "../../utils/utils.jsx";
+import { useTags } from "../../context/TagContext.jsx";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -13,6 +14,7 @@ export default function DetailPage() {
     onClickComplete,
   } = useTodoActions();
   const { id } = useParams();
+  const [tags, setTags] = useTags();
   const { changeDate } = utils();
   fetchDetail(id);
 

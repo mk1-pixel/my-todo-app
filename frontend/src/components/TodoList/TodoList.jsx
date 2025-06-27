@@ -54,7 +54,6 @@ function PaginatedItems({
       setItemOffset(0);
       prevFlag.current = changeDisplay;
     }
-    console.log(itemOffset)
     const endOffset = itemOffset + itemsPerPage;
     const sliced = derivedArray.slice(itemOffset, endOffset);
     setCurrentItems(sliced);
