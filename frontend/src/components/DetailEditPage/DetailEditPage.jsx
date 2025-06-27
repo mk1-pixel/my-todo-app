@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { styles } from "./DetailEditPage.module.jsx";
 import { FaCalendarAlt } from "react-icons/fa";
-import { Tag } from "../TagItem/TagItem.jsx";
+import { TagItem } from "../TagItem/TagItem.jsx";
 import DatePicker from "react-datepicker";
 import ja from "date-fns/locale/ja";
 import { useTodoActions } from "../../hooks/useTodoActions.jsx";
@@ -95,7 +95,7 @@ export default function DetailEditPage() {
                     </div>
                   </div>
                   <div className="sm:flex-row md:flex justify-between">
-                    <Tag  />
+                    <TagItem  />
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>
                       <div className="flex items-center">

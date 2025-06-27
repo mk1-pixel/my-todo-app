@@ -3,7 +3,7 @@ import { createContext, useContext,  useState } from "react";
 const TagContext = createContext();
 
 export const TagProvider = ({children}) => {
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(["test", "test"]);
 
   return(
     <TagContext.Provider value={{tags, setTags}} >

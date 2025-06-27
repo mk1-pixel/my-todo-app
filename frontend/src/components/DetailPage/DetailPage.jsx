@@ -3,21 +3,18 @@ import { styles } from "./DetailPage.module";
 import { useTodoActions } from "../../hooks/useTodoActions.jsx";
 import { utils } from "../../utils/utils.jsx";
 import { useTags } from "../../context/TagContext.jsx";
+import { Tags } from "../Tags/Tags.jsx";
 
 export default function DetailPage() {
   const location = useLocation();
   const state = location.state;
-  const {
-    onClickDelete,
-    fetchDetail,
-    detailData,
-    onClickComplete,
-  } = useTodoActions();
+  const { onClickDelete, fetchDetail, detailData, onClickComplete } =
+    useTodoActions();
   const { id } = useParams();
-  const [tags, setTags] = useTags();
+  const { tags, setTags } = useTags();
   const { changeDate } = utils();
   fetchDetail(id);
-
+  
   return (
     <>
       <div className={styles.homeOuter}>
@@ -51,33 +48,38 @@ export default function DetailPage() {
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>期限日：</span>
                       <div className={styles.detailDate}>
-                        { changeDate(detailData.dueDate)}
+                        {changeDate(detailData.dueDate)}
                       </div>
                     </div>
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>作成日：</span>
                       <div className={styles.detailDate}>
-                        { changeDate(detailData.createdDate)}
+                        {changeDate(detailData.createdDate)}
                       </div>
                     </div>
                   </div>
                   <div className="sm:flex-row md:flex justify-between">
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>タグ：</span>
-                      <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">Badge</span>
-                      <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">Badge</span>
+                      {tags.map((tag,index) => (
+                        <Tags tag={tag} key={index} disabled={true}/>
+                      ))}
                     </div>
                     <div className={styles.item}>
                       <span className={styles.detailTitle}>優先度：</span>
                       <div className={styles.detailDate}>
-                        {detailData.priority === 0 ? "高" : detailData.priority === 1 ? "中" : "低"}
+                        {detailData.priority === 0
+                          ? "高"
+                          : detailData.priority === 1
+                          ? "中"
+                          : "低"}
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 border-gray-50 py-2 px-2 border-b border-slate-200">
                     <span className={styles.detailTitle}>メモ</span>
                     <div className="relative w-full min-w-[200px] min-h-[150px] text-base break-words whitespace-normal border border-gray-300 shadow rounded p-2 ">
-                        {detailData.description}
+                      {detailData.description}
                     </div>
                   </div>
                   <div className={styles.buttonArea}>
