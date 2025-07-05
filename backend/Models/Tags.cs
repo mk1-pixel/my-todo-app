@@ -6,6 +6,6 @@ namespace backend.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<TodoItem> Todos { get; set; } =new();
+        public ICollection<TodoTag> TodoTags { get; set; } = new List<TodoTag>();
     }
 }

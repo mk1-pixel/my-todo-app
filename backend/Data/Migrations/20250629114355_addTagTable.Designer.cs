@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
 
 #nullable disable
 
-namespace backend.Migrations
+namespace backend.Data.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    partial class TodoContextModelSnapshot : ModelSnapshot
+    [Migration("20250629114355_addTagTable")]
+    partial class addTagTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("TagsTodoItem", b =>
+                {
+                    b.Property<int>("TagsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TodosId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TagsId", "TodosId");
+
+                    b.HasIndex("TodosId");
+
+                    b.ToTable("TagsTodoItem");
+                });
 
             modelBuilder.Entity("backend.Models.Tags", b =>
                 {
@@ -70,48 +88,19 @@ namespace backend.Migrations
                     b.ToTable("Todos");
                 });
 
-            modelBuilder.Entity("backend.Models.TodoTag", b =>
+            modelBuilder.Entity("TagsTodoItem", b =>
                 {
-                    b.Property<int>("TodoId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("TodoId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("TodoTags");
-                });
-
-            modelBuilder.Entity("backend.Models.TodoTag", b =>
-                {
-                    b.HasOne("backend.Models.Tags", "Tags")
-                        .WithMany("TodoTags")
-                        .HasForeignKey("TagId")
+                    b.HasOne("backend.Models.Tags", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Models.TodoItem", "TodoItem")
-                        .WithMany("TodoTags")
-                        .HasForeignKey("TodoId")
+                    b.HasOne("backend.Models.TodoItem", null)
+                        .WithMany()
+                        .HasForeignKey("TodosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Tags");
-
-                    b.Navigation("TodoItem");
-                });
-
-            modelBuilder.Entity("backend.Models.Tags", b =>
-                {
-                    b.Navigation("TodoTags");
-                });
-
-            modelBuilder.Entity("backend.Models.TodoItem", b =>
-                {
-                    b.Navigation("TodoTags");
                 });
 #pragma warning restore 612, 618
         }

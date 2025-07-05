@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
+using AutoMapper;
+using backend.Dtos;
 
 namespace backend.Controllers
 {
@@ -11,10 +13,12 @@ namespace backend.Controllers
     public class TodoController : ControllerBase
     {
         private readonly TodoContext _context;
+        private readonly IMapper _mapper;
 
-        public TodoController(TodoContext context)
+        public TodoController(TodoContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,17 +34,23 @@ namespace backend.Controllers
             }).ToListAsync();
             return Ok(todos);
         }
-            // await _context.Todos.ToListAsync();
-            
-
-
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItem>> GetTodo(int id)
+        public async Task<ActionResult<TodoDto>> GetTodo(int id)
         {
-            var todo = await _context.Todos.FindAsync(id);
+            var todo = await _context.Todos
+                .Include(t =>  t.TodoTags)
+                .ThenInclude(tt => tt.Tags)
+                .FirstOrDefaultAsync(t => t.Id == id);
             if(todo == null) return NotFound();
-            return todo;
+
+            var dto = new TodoDto
+            {
+                Id = todo.Id,
+                Title = todo.Title,
+                Tags = todo.TodoTags.Select(tt => tt.Tags.Name).ToList()
+            };
+            return dto;
      }
 
         [HttpPost]

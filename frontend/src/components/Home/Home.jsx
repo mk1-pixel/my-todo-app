@@ -18,6 +18,7 @@ export default function Home() {
     onClickComplete,
     onClickDelete,
     onClickBack,
+    setIncomplete
 } = useTodoActions();
 
   return (
@@ -40,6 +41,7 @@ export default function Home() {
               handleState={handleState}
               changeDisplay={changeDisplay}
               loading={loading}
+              setIncomplete={setIncomplete}
             />
           </section>
         </div>

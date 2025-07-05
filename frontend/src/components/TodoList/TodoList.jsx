@@ -12,6 +12,7 @@ export default function Incomplete({
   handleState,
   onClickBack,
   loading,
+  setIncomplete,
 }) {
   return (
     <>
@@ -28,6 +29,7 @@ export default function Incomplete({
           changeDisplay={changeDisplay}
           onClickBack={onClickBack}
           loading={loading}
+          setIncomplete={setIncomplete}
         />
       </div>
     </>
@@ -40,14 +42,34 @@ function PaginatedItems({
   changeDisplay,
   onClickBack,
   loading,
+  setIncomplete,
 }) {
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+  const [SortDueDate, setSortDueDate] = useState(true);
+  const [SortImportant, setSortImportant] = useState(true);
+
   const prevFlag = useRef(changeDisplay);
   const derivedArray = useMemo(() => {
     return changeDisplay ? incomplete : complete;
   }, [changeDisplay, incomplete, complete]);
+
+  useMemo(() => {
+    const newIncomplete = [...incomplete];
+    SortDueDate
+      ? newIncomplete.sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate))
+      : newIncomplete.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    setIncomplete(newIncomplete);
+  }, [SortDueDate]);
+
+  useMemo(() => {
+    const newIncomplete = [...incomplete];
+    SortImportant
+      ? newIncomplete.sort((a, b) => a.priority - b.priority)
+      : newIncomplete.sort((a, b) => b.priority - a.priority);
+    setIncomplete(newIncomplete);
+  }, [SortImportant]);
 
   useEffect(() => {
     if (changeDisplay !== prevFlag.current) {
@@ -72,6 +94,10 @@ function PaginatedItems({
         changeDisplay={changeDisplay}
         onClickBack={onClickBack}
         loading={loading}
+        SortDueDate={SortDueDate}
+        setSortDueDate={setSortDueDate}
+        SortImportant={SortImportant}
+        setSortImportant={setSortImportant}
       />
       <ReactPaginate
         nextLabel=">"

@@ -15,6 +15,6 @@ namespace backend.Models
 
         public int Priority{ get; set; }
 
-        public List<Tags> Tags { get; set; } = new();
+        public ICollection<TodoTag> TodoTags { get; set; } = new List<TodoTag>();
     }
 }

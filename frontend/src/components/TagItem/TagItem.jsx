@@ -6,9 +6,9 @@ import { Tags } from "../Tags/Tags.jsx";
 export function TagItem({}) {
   const [inputTag, setInputTag] = useState("");
   const { tags, setTags } = useTags();
-  console.log(tags);
+
   const addTags = (inputTag) => {
-    if (tags.length >= 3) return;
+    if (tags.length >= 3 || inputTag === "") return;
     const newTags = [...tags, inputTag];
     setTags(newTags);
   };
@@ -32,7 +32,7 @@ export function TagItem({}) {
           <span className={styles.detailTitleCol}>タグ：</span>
           <div className="flex gap-2 flex-wrap">
             {tags.map((tag, index) => (
-              <Tags tag={tag} key={index} deleteTags={deleteTags} />
+              <Tags tag={tag} key={index} deleteTags={() => deleteTags(index)} />
             ))}
           </div>
         </div>

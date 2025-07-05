@@ -141,6 +141,7 @@ export function useTodoActions() {
   const getDetail = async (id) => {
     try {
       const res = await axios.get(`${apiUrl}${id}`);
+      console.log(res.data)
       return res.data;
     } catch (err) {
       console.log(err);
@@ -220,6 +221,7 @@ export function useTodoActions() {
     handleState,
     setInputTodo,
     setDetailData,
+    setIncomplete,
     onClickAdd,
     onClickComplete,
     onClickDelete,
