@@ -51,7 +51,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TodoContext>();
-    //db.Database.Migrate();
+    db.Database.Migrate();
 }
 
 // ✅ Swagger（開発のみ）
