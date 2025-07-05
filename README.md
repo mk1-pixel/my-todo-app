@@ -17,7 +17,8 @@
 
 
 ### デモ
-- **アプリURL** [https://my-todo-frontend.onrender.com/](https://my-todo-frontend.onrender.com/)
+- ~~**アプリURL** [https://my-todo-frontend.onrender.com/](https://my-todo-frontend.onrender.com/)~~
+(Renderの無料枠が期限切れのためDBが動きません。現在対策を考え中です。)
 - **リポジトリ** [https://github.com/mk1-pixel/my-todo-app](https://github.com/mk1-pixel/my-todo-app)
 
 ### 技術スタック
