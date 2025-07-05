@@ -47,13 +47,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// ✅ 自動マイグレーション
-using (var scope = app.Services.CreateScope())
+if (app.Environment.IsDevelopment())
 {
-    var db = scope.ServiceProvider.GetRequiredService<TodoContext>();
-    db.Database.Migrate();
+    // ✅ 自動マイグレーション
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<TodoContext>();
+        db.Database.Migrate();
+    }
 }
-
 // ✅ Swagger（開発のみ）
 if (app.Environment.IsDevelopment())
 {
