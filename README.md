@@ -18,7 +18,7 @@
 
 ### デモ
 - **アプリURL** [https://my-todo-frontend.onrender.com/](https://my-todo-frontend.onrender.com/)
-(Renderの無料枠が期限切れのためDBをsupabase変更しました。)
+(Renderの無料枠が期限切れのためDBをsupabase変更しましたが不具合発生中です。)
 - **リポジトリ** [https://github.com/mk1-pixel/my-todo-app](https://github.com/mk1-pixel/my-todo-app)
 
 ### 技術スタック
@@ -29,7 +29,7 @@
 - その他: [Git, Postman]
 
 ### デプロイについて
-このアプリはRenderのフリープランを利用しています。そのためコンテナがスリープ状態になる事があり、アクセス時に遅延が発生することがあります。その場合は最大50秒程待ってコンテナが起動してからブラウザ更新をしてください。
+このアプリはRenderのフリープランを利用しています。そのためコンテナがスリープ状態になる事があり、アクセス時に遅延が発生することがあります。その場合は最大50秒程待ってコンテナが起動してからブラウザ更新をしてください。（現在不具合発生中です）
 
 ### セットアップ（ローカル環境で動かす場合）
 1. リポジトリのクローン: `git clone https://github.com/mk1-pixel/my-todo-app.git`
