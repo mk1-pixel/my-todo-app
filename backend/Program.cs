@@ -9,7 +9,6 @@ builder.Services.AddCors(options =>
 {
     if (builder.Environment.IsDevelopment())
     {
-        // ✅ 開発環境：すべて許可（ローカルなど）
         options.AddPolicy("AllowFrontend", policy =>
         {
             policy.AllowAnyOrigin()
@@ -19,12 +18,11 @@ builder.Services.AddCors(options =>
     }
     else
     {
-        // ✅ 本番環境：指定オリジンのみ許可
         var frontendOrigin = "https://my-todo-frontend.onrender.com";
 
         options.AddPolicy("AllowFrontend", policy =>
         {
-            policy.SetIsOriginAllowed(origin => origin.StartsWith(frontendOrigin))
+            policy.WithOrigins(frontendOrigin)
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -47,26 +45,31 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// ✅ 自動マイグレーション（開発環境のみ）
 if (app.Environment.IsDevelopment())
 {
-    // ✅ 自動マイグレーション
     using (var scope = app.Services.CreateScope())
     {
         var db = scope.ServiceProvider.GetRequiredService<TodoContext>();
         db.Database.Migrate();
     }
 }
-// ✅ Swagger（開発のみ）
+
+// ✅ Swagger（開発環境のみ）
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// ✅ CORS（コントローラより前）
+// ✅ Routing → CORS → Authorization の順で適用
+app.UseRouting();
+
 app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
+
+// ✅ API ルーティング
 app.MapControllers();
 
 app.Run();
