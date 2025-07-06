@@ -23,7 +23,7 @@ services:
       - ./backend:/app
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=TodoDb;Username=postgres;Password=secret
+      - ConnectionStrings__DefaultConnection=Host=aws-0-ap-northeast-1.pooler.supabase.com;Port=6543;Database=postgres;Username=postgres.lzkhwrfrqkowunrekshj;Password=QMJZHuS6ckTAaY17;SSL Mode=Require;Trust Server Certificate=true
       - CHOKIDAR_USEPOLLING=true
     depends_on:
       - postgres
