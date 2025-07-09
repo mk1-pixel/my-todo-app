@@ -30,7 +30,11 @@ builder.Services.AddCors(options =>
 });
 
 // ✅ ポート設定
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+var port = Environment.GetEnvironmentVariable("PORT");
+if (string.IsNullOrEmpty(port))
+{
+    port = "5000"; // ローカル開発用のデフォルトポート
+}
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 // ✅ DB 接続
