@@ -1,5 +1,8 @@
-﻿namespace backend.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace backend.Models
 {
+    [Table("todo_tags")]
     public class TodoTag
     {
         public int TodoId { get; set; }
