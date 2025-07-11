@@ -18,7 +18,7 @@
 
 ### デモ
 - **アプリURL** [https://my-todo-frontend.onrender.com/](https://my-todo-frontend.onrender.com/)
-(Renderの無料枠が期限切れのためDBをsupabase変更しましたが不具合発生中です。そのため確認したい場合はお手数ですがローカル環境で実行して下さい)
+(Renderの無料枠が期限切れのためDBをsupabase変更しました)
 - **リポジトリ** [https://github.com/mk1-pixel/my-todo-app](https://github.com/mk1-pixel/my-todo-app)
 
 ### 技術スタック
