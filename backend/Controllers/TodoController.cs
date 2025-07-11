@@ -38,11 +38,11 @@ namespace backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoDto>> GetTodo(int id)
         {
-            //var todo = await _context.Todos
-            //    .Include(t =>  t.TodoTags)
-            //    .ThenInclude(tt => tt.Tags)
-            //    .FirstOrDefaultAsync(t => t.Id == id);
-            var todo = await _context.Todos.FirstOrDefaultAsync(t => t.Id == id);
+            var todo = await _context.Todos
+                .Include(t => t.TodoTags)
+                .ThenInclude(tt => tt.Tags)
+                .FirstOrDefaultAsync(t => t.Id == id);
+            //var todo = await _context.Todos.FirstOrDefaultAsync(t => t.Id == id);
             if (todo == null) return NotFound();
 
             var dto = new TodoDto
