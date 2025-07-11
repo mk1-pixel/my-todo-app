@@ -18,7 +18,7 @@ namespace backend.Models
 
         [Column("created_date")]
         public DateTime? CreatedDate { get; set; }
-        [Column("Due_date")]
+        [Column("due_date")]
         public DateTime? DueDate{ get; set; }
 
         [Column("description")]
