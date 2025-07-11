@@ -1,10 +1,12 @@
 ﻿using backend.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace backend.Models
 {
     [Table("tags")]
     public class Tags
     {
+        [Key]
         [Column("id")]
         public int Id { get; set; }
         [Column("name")]

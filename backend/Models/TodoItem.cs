@@ -7,6 +7,7 @@ namespace backend.Models
     [Table("todos")]
     public class TodoItem
     {
+        [Key]
         [Column("id")]
         public int Id { get; set; }
         [Column("title")]
