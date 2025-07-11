@@ -25,7 +25,7 @@ export default function Home() {
     <>
       <div className={styles.homeOuter}>
         <div className={styles.homeWidthMd}>
-          <p>このアプリはRenderのフリープランを使っています。そのため、サスペンドすることが度々あるのでその場合は最大50秒ほど待って更新してください。（現在DBが不具合発生中ですがローカル環境では動作します。）</p>
+          <p>このアプリはRenderのフリープランを使っています。そのため、サスペンドすることが度々あるのでその場合は最大50秒ほど待って更新してください。</p>
           <AddTodo
             inputTodo={inputTodo}
             setInputTodo={setInputTodo}
