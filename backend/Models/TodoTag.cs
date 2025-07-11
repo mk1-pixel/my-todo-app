@@ -7,7 +7,7 @@ namespace backend.Models
     public class TodoTag
     {
         [Key]
-        [Column("todo_id ")]
+        [Column("todo_id")]
         public int TodoId { get; set; }
         [Column("todo_item")]
         public TodoItem TodoItem { get; set; }
